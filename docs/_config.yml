@@ -1,5 +1,6 @@
-title: Block Story Reference
-description: Справочник по игре Block Story
+
+title: Block Story Списки
+description: Разнообразные списки для игры. Пока что можно использовать только в кастомных квестах
 lang: ru
 exclude:
   - README.md
