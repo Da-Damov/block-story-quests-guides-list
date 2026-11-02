@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }} · {{ site.title }}</title>
+<link rel="icon" type="image/png" href="{{ '/assets/favicon.png' | relative_url }}">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+       Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #1f2328;
+       background: #ffffff; }
+a { color: #0969da; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.layout { max-width: 1200px; margin: 0 auto; display: flex; gap: 24px;
+          padding: 24px; align-items: flex-start; }
+.sidebar { width: 250px; flex: none; position: sticky; top: 24px;
+           max-height: calc(100vh - 48px); overflow: auto; }
+.sidebar a.nav-item { display: block; padding: 5px 8px; border-radius: 6px; color: #1f2328;
+                      font-size: 14px; }
+.sidebar a.nav-item:hover { background: #f3f4f6; text-decoration: none; }
+.sidebar a.nav-item.active { background: #f6f8fa; color: #0969da; font-weight: 600; }
+.content { flex: 1; min-width: 0; }
+
+.markdown-body h1 { font-size: 2em; padding-bottom: .3em; border-bottom: 1px solid #d8dee4;
+                    margin: 0 0 16px; font-weight: 600; }
+.markdown-body table { border-spacing: 0; border-collapse: collapse; margin-bottom: 16px;
+                       display: block; width: max-content; max-width: 100%; overflow: auto; }
+.markdown-body table th { font-weight: 600; }
+.markdown-body table th, .markdown-body table td { padding: 6px 13px;
+                       border: 1px solid #d0d7de; }
+.markdown-body table tr { background-color: #ffffff; border-top: 1px solid #d8dee4; }
+.markdown-body table tr:nth-child(2n) { background-color: #f6f8fa; }
+.markdown-body ul { padding-left: 2em; }
+.markdown-body li { margin: 4px 0; }
+
+.markdown-body blockquote { margin: 0 0 16px; padding: 8px 16px; border-left: 4px solid;
+                            border-radius: 6px; display: flex; gap: 8px; font-size: 14.5px; }
+.markdown-body blockquote p { margin: 0; }
+.markdown-body blockquote strong { display: block; margin-bottom: 2px; }
+.gh-alert::before { flex: none; font-size: 15px; line-height: 1.6; }
+.gh-alert-info    { background: #ddf4ff; border-color: #0969da; color: #0a3069; }
+.gh-alert-info::before    { content: "ℹ️"; }
+.gh-alert-note    { background: #ddf4ff; border-color: #0969da; color: #0a3069; }
+.gh-alert-note::before    { content: "ℹ️"; }
+.gh-alert-warning { background: #fff8c5; border-color: #bf8700; color: #4d2d00; }
+.gh-alert-warning::before { content: "⚠️"; }
+.gh-alert-tip     { background: #dafbe1; border-color: #1a7f37; color: #0f5323; }
+.gh-alert-tip::before     { content: "💡"; }
+
+@media (max-width: 900px) {
+  .layout { flex-direction: column; padding: 16px; }
+  .sidebar { position: static; width: 100%; max-height: none; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    {% assign navpages = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
+    {% for p in navpages %}
+    <a class="nav-item{% if p.url == page.url %} active{% endif %}" href="{{ p.url | relative_url }}">{% if p.nav_order == 0 %}Главная{% else %}{{ p.title }}{% endif %}</a>
+    {% endfor %}
+  </nav>
+  <main class="content markdown-body">
+{{ content }}
+  </main>
+</div>
+<script>
+(function () {
+  var map = {INFO: "info", NOTE: "note", WARNING: "warning", TIP: "tip"};
+  document.querySelectorAll(".markdown-body blockquote").forEach(function (q) {
+    var p = q.querySelector("p");
+    if (!p) return;
+    var s = p.querySelector("strong");
+    if (!s || p.firstElementChild !== s) return;
+    var level = (s.textContent || "").trim().toUpperCase();
+    if (map[level]) q.classList.add("gh-alert", "gh-alert-" + map[level]);
+  });
+})();
+</script>
+</body>
+</html>
