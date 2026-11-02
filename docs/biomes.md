@@ -1,3 +1,9 @@
+---
+layout: default
+title: Биомы
+nav_order: 12
+---
+
 # Биомы
 
 

@@ -1,3 +1,9 @@
+---
+layout: default
+title: Питомцы
+nav_order: 3
+---
+
 # Питомцы
 
 

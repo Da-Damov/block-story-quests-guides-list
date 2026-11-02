@@ -1,3 +1,9 @@
+---
+layout: default
+title: Типы стрел
+nav_order: 11
+---
+
 # Типы стрел
 
 

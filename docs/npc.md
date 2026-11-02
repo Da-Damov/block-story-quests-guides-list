@@ -1,3 +1,9 @@
+---
+layout: default
+title: NPC
+nav_order: 2
+---
+
 # NPC
 
 
